@@ -22,5 +22,5 @@ function component(width, height, color, x, y) {
     this.y = y;
     ctx = myGameArea.context;
     ctx.fillStyle = color;
-    ctx.fillRect(this.x, this.y, this.width. this.height);
+    ctx.fillRect(this.x, this.y, this.width, this.height);
 }
