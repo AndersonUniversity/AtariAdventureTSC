@@ -9,14 +9,18 @@ function startGame() {
 let myGameArea = {
     canvas : document.createElement("canvas"),
     start : function() {
+        //setting dimenstions of canvas
         this.canvas.width = 1024;
         this.canvas.height = 576;
         this.context = this.canvas.getContext("2d");
         document.body.insertBefore(this.canvas, document.body.childNodes[0]);
+        //how many times per second to redraw the screen
         this.interval = setInterval(updateGameArea, 20);
+        //listening to keyboard
         window.addEventListener('keydown', function(e) {myGameArea.key = e.keyCode;})
         window.addEventListener('keyup', function(e) {myGameArea.key = false;})
     },
+    //reset the canvas
     clear : function() {
         this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
     }
@@ -30,6 +34,7 @@ function Component(width, height, color, x, y) {
     this.speedY = 0;
     this.x = x;
     this.y = y;
+    //how to update component attributes
     this.update = function(){
         ctx = myGameArea.context;
         ctx.fillStyle = color;
