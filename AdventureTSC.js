@@ -1,4 +1,9 @@
 let myGamePiece;
+let topBorderWall;
+let bottomBorderWall;
+let leftBorderWall;
+let rightBorderWall;
+let door1;
 
 const screenHeight = 576;
 const screenWidth = 1024;
@@ -15,11 +20,17 @@ const topWall = 0;
 const startX = 50;
 const startY = 250;
 const interval = 20;
+const borderWidth = 15;
 
 
 function startGame() {
     myGameArea.start();
     myGamePiece = new Component(pieceWidth, pieceHeight, "blue", startX, startY);
+    topBorderWall = new Component(screenWidth, 15, "red", 0, 0);
+    bottomBorderWall = new Component(screenWidth, 15, "red", 0, myGameArea.canvas.height - 15);
+    leftBorderWall = new Component(15, screenHeight, "red", 0, 0);
+    rightBorderWall = new Component(15, screenHeight, "red", myGameArea.canvas.width - 15, 0);
+    door1 = new Component(30, screenHeight/4, "green", myGameArea.canvas.width - 30, screenHeight/3)
 }
 
 //define the canvas
@@ -40,6 +51,10 @@ let myGameArea = {
     //reset the canvas
     clear : function() {
         this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+    },
+    //stop the game
+    stop : function() {
+        clearInterval(this.interval);
     }
 }
 
@@ -61,15 +76,60 @@ function Component(width, height, color, x, y) {
         this.x += this.speedX;
         this.y += this.speedY;
     }
+    this.crashWith = function(otherobj) {
+        //players edges
+        let playerLeft = this.x;
+        let playerRight = this.x + (this.width);
+        let playerTop = this.y;
+        let playerBottom = this.y + (this.height);
+        //other objects edges
+        let otherLeft = otherobj.x;
+        let otherRight = otherobj.x + (otherobj.width);
+        let otherTop = otherobj.y;
+        let otherBottom = otherobj.y + (otherobj.height);
+        let crash = true;
+        if((playerBottom < otherTop) ||
+            (playerTop > otherBottom) ||
+            (playerRight < otherLeft) ||
+            (playerLeft > otherRight)) {
+            crash = false;
+        }
+        return crash;
+    }
 
 }
 
 //updating the screen so that the game is playable
 function updateGameArea() {
-    myGameArea.clear();
-    decideMove();
-    myGamePiece.newPos();
-    myGamePiece.update();
+    //if a player collided with a border wall set them back onto the canvas
+    if(myGamePiece.crashWith(topBorderWall) ||
+        (myGamePiece.crashWith(bottomBorderWall)) ||
+        (myGamePiece.crashWith(leftBorderWall)) ||
+        (myGamePiece.crashWith(rightBorderWall))) {
+        myGameArea.clear();
+        topBorderWall.update();
+        bottomBorderWall.update();
+        leftBorderWall.update();
+        rightBorderWall.update();
+        decideMove();
+        door1.update();
+        myGamePiece.newPos();
+        myGamePiece.update();
+    }
+
+    //player has not collided with a border wall
+    else {
+        myGameArea.clear();
+        topBorderWall.update();
+        bottomBorderWall.update();
+        leftBorderWall.update();
+        rightBorderWall.update();
+        door1.update();
+        decideMove();
+        myGamePiece.newPos();
+        myGamePiece.update();
+    }
+
 }
 
 //moving the player based on the arrow key that is pressed
@@ -119,20 +179,20 @@ function stopMovement() {
 
 //make sure player does not move off the screen
 function restrictPlayer() {
-    if(myGamePiece.x < leftWall) {
+    if(myGamePiece.x < (leftWall + borderWidth)) {
         stopMovement();
-        myGamePiece.x = leftWall;
+        myGamePiece.x = (leftWall + borderWidth);
     }
-    if(myGamePiece.y < topWall) {
+    if(myGamePiece.y < (topWall + borderWidth)) {
         stopMovement();
-        myGamePiece.y = topWall;
+        myGamePiece.y = (topWall + borderWidth);
     }
-    if(myGamePiece.x > myGameArea.canvas.width - pieceWidth) {
+    if(myGamePiece.x > (myGameArea.canvas.width - pieceWidth) - borderWidth) {
         stopMovement();
-        myGamePiece.x = myGameArea.canvas.width - pieceWidth;
+        myGamePiece.x = (myGameArea.canvas.width - pieceWidth) - borderWidth;
     }
-    if(myGamePiece.y > myGameArea.canvas.height - pieceHeight) {
+    if(myGamePiece.y > (myGameArea.canvas.height - pieceHeight) - borderWidth) {
         stopMovement();
-        myGamePiece.y = myGameArea.canvas.height - pieceHeight;
+        myGamePiece.y = (myGameArea.canvas.height - pieceHeight) - borderWidth;
     }
 }
