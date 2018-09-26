@@ -1,4 +1,7 @@
-//logic for moving the player based on the arrow key that is pressed
+/**
+ * logic for moving the player based on the arrow key that is pressed
+ */
+
 function decideMove() {
     if(myGameArea.key && myGameArea.key === leftArrow) {
         moveLeft();
@@ -17,7 +20,9 @@ function decideMove() {
     }
 }
 
-//functions that dictate player movement
+/**
+ * functions that dictates player movement
+ */
 function moveUp() {
     myGamePiece.speedY -= movementSpeed;
     restrictPlayer();
@@ -43,7 +48,10 @@ function stopMovement() {
     myGamePiece.speedY = stoppedSpeed;
 }
 
-//collision detection making sure that the player does not cross the border
+/**
+ * collision detection making sure that the player does not cross the border and if so, put them back onto the canvas
+ * play area
+ */
 function restrictPlayer() {
     //if hit left border
     if(myGamePiece.x < (leftWall + borderWidth)) {
@@ -67,9 +75,9 @@ function restrictPlayer() {
     }
 }
 
-/*
+/**
  * super weird math to get player to go through doors correctly so that the player
- *does not get stuck in a loop of going through doors
+ *does not get stuck in a never ending loop of going through doors
  */
 function decidePlayerStartPos() {
     if(currentRoom === 0) {

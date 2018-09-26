@@ -1,5 +1,10 @@
-//setting up the game canvas
-//taken from https://www.w3schools.com/graphics/game_intro.asp
+/**setting up the game canvas
+ * this code was taken from https://www.w3schools.com/graphics/game_int
+ * this function defines the canvas as well as defining frames for counting purposes
+ * as well as defining listening to the keyboard so that the arrow keys can be used to control the player
+ * this also defines how to clear the canvas and how to stop the game
+ * @type {{canvas: HTMLElement, start: myGameArea.start, clear: myGameArea.clear, stop: myGameArea.stop}}
+ */
 let myGameArea = {
     canvas : document.createElement('canvas'),
     start : function() {
@@ -26,8 +31,16 @@ let myGameArea = {
     }
 }
 
-//creating attributes for all components, aka the player
-//taken from https://www.w3schools.com/graphics/game_intro.asp
+/**creating attributes for all components whether they end up getting used or not
+ * this code was taken from https://www.w3schools.com/graphics/game_intro.asp
+ * @param width
+ * @param height
+ * @param color
+ * @param x
+ * @param y
+ * @param type
+ * @constructor
+ */
 function Component(width, height, color, x, y, type) {
     this.type = type;
     this.width = width;
@@ -48,10 +61,12 @@ function Component(width, height, color, x, y, type) {
             ctx.fillRect(this.x, this.y, this.width, this.height);
         }
     }
+    //calculating the players new position
     this.newPos = function() {
         this.x += this.speedX;
         this.y += this.speedY;
     }
+    //collision detection function to see if player collided with another component
     this.crashWith = function(otherobj) {
         //players edges
         let playerLeft = this.x;

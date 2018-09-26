@@ -1,4 +1,4 @@
-/*
+/**
  * @author Tyler Cooper
  * 9/25/18
  * Individual Project
@@ -40,8 +40,11 @@ const startY = 248;
 const interval = 20;
 const borderWidth = 15;
 const borderHeight = 15;
+const timeToComplete = 10000;
 
-//startGame() taken from https://www.w3schools.com/graphics/game_intro.asp
+/**startGame() code format taken from https://www.w3schools.com/graphics/game_intro.asp
+ * startGame defines all the components that will be used during the course of the game
+ */
 function startGame() {
     myGameArea.start();
     myGamePiece = new Component(pieceWidth, pieceHeight, 'blue', startX, startY);

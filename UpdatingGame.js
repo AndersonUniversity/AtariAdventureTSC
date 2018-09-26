@@ -1,5 +1,7 @@
-//updating the screen so that the game is playable
-//idea taken from https://www.w3schools.com/graphics/game_intro.asp but modified for my needs
+/**
+ * updating the screen so that the game is playable
+ * idea taken from https://www.w3schools.com/graphics/game_intro.asp but modified for my logic and components
+ */
 function updateGameArea() {
     //if we are currently in the first room, draw all the components that correspond to the first room
     if(currentRoom === 0) {
@@ -50,7 +52,7 @@ function updateGameArea() {
     }
     //our score is based on a designated time to complete minus the number of frames that have passed
     myGameArea.frameNo += 1;
-    score = (10000 - myGameArea.frameNo);
+    score = (timeToComplete - myGameArea.frameNo);
     myScore.text = 'Score: ' + score;
     myScore.update();
     //if we run out of time, end the game
