@@ -1,6 +1,7 @@
 # Adventure Game
 Created by Tyler Cooper.<br/>
 This project is inspired by the Atari game Adventure.<br/>
+https://www.w3schools.com/graphics/game_intro.asp was utilized heavily for learning how to code in javascript.<br/>
 # Instructions
 The goal of the game is to get your player to the end castle. To do so, you must first aquire the key!<br/>
 The key is the small purple square and the end castle is the large purple square.</br>
