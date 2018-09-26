@@ -41,7 +41,7 @@ const interval = 20;
 const borderWidth = 15;
 const borderHeight = 15;
 
-//startGame() was basically taken from https://www.w3schools.com/graphics/game_intro.asp
+//startGame() taken from https://www.w3schools.com/graphics/game_intro.asp
 function startGame() {
     myGameArea.start();
     myGamePiece = new Component(pieceWidth, pieceHeight, 'blue', startX, startY);
